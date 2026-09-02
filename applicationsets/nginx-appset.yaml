@@ -1,1 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - env: dev
+        namespace: nginx-dev
+        replicas: "1"
 
+      - env: qa
+        namespace: nginx-qa
+        replicas: "2"
+
+      - env: prod
+        namespace: nginx-prod
+        replicas: "3"
+
+  template:
+    metadata:
+      name: 'nginx-{{env}}'
+
+    spec:
+      project: default
+
+      source:
+        repoURL: https://github.com/<username>/nginx-gitops.git
+        targetRevision: main
+        path: nginx-chart
+
+        helm:
+          parameters:
+          - name: replicaCount
+            value: '{{replicas}}'
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+
+        syncOptions:
+        - CreateNamespace=true
