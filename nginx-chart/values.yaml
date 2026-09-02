@@ -3,4 +3,3 @@ replicaCount: 1
 image:
   repository: nginx
   tag: latest
-`
