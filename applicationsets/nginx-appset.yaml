@@ -27,7 +27,7 @@ spec:
       project: default
 
       source:
-        repoURL: https://github.com/<username>/nginx-gitops.git
+        repoURL: https://github.com/midhunvtr/argocd.git
         targetRevision: main
         path: nginx-chart
 
