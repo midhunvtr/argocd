@@ -16,7 +16,7 @@ spec:
       project: default
 
       source:
-        repoURL: https://github.com/<your-github-user>/gitops-demo.git
+        repoURL: https://github.com/midhunvtr/argocd.git
         targetRevision: HEAD
         path: apps/nginx
 
